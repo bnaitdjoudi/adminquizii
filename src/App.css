@@ -27,6 +27,15 @@
 .App-link {
   color: #61dafb;
 }
+.active{
+  background-color:#c3c5ef !important;
+
+}
+.toolBar{
+  background-color: #f3f2f1;
+  border-bottom: 1px solid #c1c2c9;
+  min-height: 40px !important;
+}
 
 @keyframes App-logo-spin {
   from {
