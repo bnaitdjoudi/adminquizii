@@ -12,7 +12,7 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-
+import loginoutservice from "./../services/LoginService"
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -23,10 +23,9 @@ import Dashboad from "./Dashboard";
 import Settings from "./Settings";
 import Quiz from "./Quiz";
 import PrivateRoute from "./commun/PrivateRoute";
-import {
- Switch,
-  Route
-} from "react-router-dom";
+import {Switch,Route} from "react-router-dom";
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 function Copyright() {
   return (
@@ -40,6 +39,7 @@ function Copyright() {
     </Typography>
   );
 }
+
 
 const drawerWidth = 240;
 
@@ -131,7 +131,14 @@ export default function MainPage() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  
+  const sigout = ()=> {
+    loginoutservice.signout().then((resp) =>{
+      console.log("cc"+resp.status);
+      localStorage.removeItem("user");
+      window.location.reload(false);
+    })
+    
+  }
 
   return (
     <div className={classes.root}>
@@ -150,10 +157,17 @@ export default function MainPage() {
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             
           </Typography>
+          
+        
+          
           <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={4} color="secondary" title="Notifications panel">
               <NotificationsIcon />
             </Badge>
+            <IconButton color="inherit" component="span" title="Logout" onClick={sigout}>
+          <ExitToAppIcon/>
+        </IconButton>
+
           </IconButton>
         </Toolbar>
       </AppBar>

@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import loginService from './../services/LoginService';
+import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 
 function Copyright() {
   return (
@@ -66,6 +67,7 @@ export default function Login() {
       if (resp.status === 200) {
        console.log(resp.data)
        localStorage.setItem("user", JSON.stringify(resp.data));
+       // localStorage.removeItem() deconncetion 
        window.location.reload(false);
       } else {
        console.log("error");
