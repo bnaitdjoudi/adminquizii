@@ -45,10 +45,18 @@ export default class SedgeTable extends React.Component<SedgeTableProp,SedgeTabl
           page: resp.data.pageNumber - 1,
           totalCount: resp.data.totalOfElements,
         })
-        }).catch((error) => { if(error.response.status===403){
+        }).catch((error) => { 
+          if(error.response.status===403){
           auth.resetLocalStoreSession();
-          window.location.reload(false);
-        } });
+          //window.location.reload(false);
+          
+        } 
+        resolve({
+          data: [],
+          page: 0,
+          totalCount: 0,
+        })
+      });
      })}); 
 
      this.setState({actions:
