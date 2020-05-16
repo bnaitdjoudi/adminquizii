@@ -13,7 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import loginService from './../services/LoginService';
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 function Copyright() {
   return (
@@ -52,6 +54,7 @@ export default function Login() {
   const classes = useStyles();
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
+  const [open, setOpen] = React.useState(false);
 
   const emailChange = (event) => {
     setEmail(event.target.value);
@@ -63,16 +66,22 @@ export default function Login() {
 
   const submit = (event) => {
     event.preventDefault();
+    setOpen(true);
     loginService.signin(email, password).then((resp) => {
+
       if (resp.status === 200) {
        console.log(resp.data)
        localStorage.setItem("user", JSON.stringify(resp.data));
-       // localStorage.removeItem() deconncetion 
+      
        window.location.reload(false);
       } else {
        console.log("error");
       }
-    });
+    }).catch((event)=>{
+      console.log(event.response.status);
+      setOpen(false)
+
+      })
 
   }
   return (
@@ -120,10 +129,14 @@ export default function Login() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            disabled={open}
 
           >
             Sign In
           </Button>
+          <Backdrop open={open} >
+        <CircularProgress color="inherit" />
+        </Backdrop>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">

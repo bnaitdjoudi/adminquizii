@@ -11,7 +11,7 @@ function App() {
     
     <Router>
     <div className="App">
-      {user!=undefined?
+      {user!==undefined?
       <MainPage/>
       :<Login/>}
     </div>

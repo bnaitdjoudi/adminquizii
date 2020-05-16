@@ -8,7 +8,7 @@ class LoginService{
         return axios.post(URL_LOGIN,{username:email,password:pwd});   
     }
     signout(){
-        return axios.get(URL_LOGOUT);    
+        return axios.post(URL_LOGOUT);    
     }
 
 }

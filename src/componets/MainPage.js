@@ -24,8 +24,9 @@ import Settings from "./Settings";
 import Quiz from "./Quiz";
 import PrivateRoute from "./commun/PrivateRoute";
 import {Switch,Route} from "react-router-dom";
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+
 
 function Copyright() {
   return (
