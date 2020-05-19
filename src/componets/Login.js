@@ -15,14 +15,12 @@ import Container from '@material-ui/core/Container';
 import loginService from './../services/LoginService';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import Snackbar from '@material-ui/core/Snackbar';
-import MuiAlert from '@material-ui/lab/Alert';
-import ErrorIcon from '@material-ui/icons/Error';
+import Alert from '@material-ui/lab/Alert';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 
-function Alert(props) {
-  return <MuiAlert elevation={6} variant="filled" {...props} />;
-}
+
 
 
 function Copyright() {
@@ -87,22 +85,24 @@ export default function Login() {
     setOpenMessageError(false);
     setOpenMessageErrorServer(false);
   };
-  function dispalyError (open){
+  function dispalyError (open,messageError){
     if (open) {
       return (
         <div>
-          <ErrorIcon color='error' align='center' display='inline-block'/>
-        <span style={
-          {
-            color: 'white',
-            backgroundColor:'#f44336',
-            padding:"15px 20px", 
-            textAlign:"center",
-            fontFamily:"Arial",
-            float:"left",
-            borderRadius:"5px"}}>
-          Votre Adresse email et/ou mot de passe sont incorrecte!
-        </span>
+          <Alert action={<IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpenMessage(false);
+                setOpenMessageError(false);
+                setOpenMessageErrorServer(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>} 
+          severity="error">{messageError}</Alert>
+         
         </div>
         
       );
@@ -154,34 +154,11 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Signin
         </Typography>
-        
-        <Snackbar open={openMessage} autoHideDuration={6000}>
-          <Alert onClose={handleClose} severity="error">Votre email et/ou mot de passe sont incorrect!
-          
-        </Alert>
-        
-              
-          
-          </Snackbar>
-          
-          <Snackbar open={openMessageError} autoHideDuration={6000}>
-          <Alert severity="error">Votre compte n'existe pas!
-          
-        </Alert>
-              
-          
-          </Snackbar>
-          <Snackbar open={openMessageErrorServer} autoHideDuration={6000}>
-          <Alert severity="error">Error
-          
-          
-        </Alert>
-              
-          
-          </Snackbar>
-        
+
         <form className={classes.form} onSubmit={submit}>
-          {dispalyError(openMessage)}
+          {dispalyError(openMessage,"Votre email ou/et votre mot de passe dont incorrecte!")}
+          {dispalyError(openMessageError,"Votre compte n'existe pas!")}
+          {dispalyError(openMessageErrorServer,"Erreur veuillez contacter...")}
           <TextField
             variant="outlined"
             margin="normal"
