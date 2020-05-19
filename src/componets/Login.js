@@ -15,6 +15,14 @@ import Container from '@material-ui/core/Container';
 import loginService from './../services/LoginService';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import ErrorIcon from '@material-ui/icons/Error';
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 function Copyright() {
@@ -29,6 +37,8 @@ function Copyright() {
     </Typography>
   );
 }
+
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -55,6 +65,9 @@ export default function Login() {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [open, setOpen] = React.useState(false);
+  const [openMessage, setOpenMessage] = React.useState(false);
+  const [openMessageError, setOpenMessageError] = React.useState(false);
+  const [openMessageErrorServer, setOpenMessageErrorServer] = React.useState(false);
 
   const emailChange = (event) => {
     setEmail(event.target.value);
@@ -64,6 +77,42 @@ export default function Login() {
     setPassword(event.target.value);
   }
 
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenMessage(false);
+    setOpenMessageError(false);
+    setOpenMessageErrorServer(false);
+  };
+  function dispalyError (open){
+    if (open) {
+      return (
+        <div>
+          <ErrorIcon color='error' align='center' display='inline-block'/>
+        <span style={
+          {
+            color: 'white',
+            backgroundColor:'#f44336',
+            padding:"15px 20px", 
+            textAlign:"center",
+            fontFamily:"Arial",
+            float:"left",
+            borderRadius:"5px"}}>
+          Votre Adresse email et/ou mot de passe sont incorrecte!
+        </span>
+        </div>
+        
+      );
+    }
+    else{
+      return;
+  
+    }
+  };
+  
   const submit = (event) => {
     event.preventDefault();
     setOpen(true);
@@ -80,6 +129,17 @@ export default function Login() {
     }).catch((event)=>{
       console.log(event.response.status);
       setOpen(false)
+      if (event.response.status===401){
+        setOpenMessage(true)
+      }
+      if (event.response.status===404){
+        setOpenMessageError(true)
+      }
+      if (event.response.status===505){
+        setOpenMessageErrorServer(true)
+      }
+      
+      
 
       })
 
@@ -94,7 +154,34 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           Signin
         </Typography>
+        
+        <Snackbar open={openMessage} autoHideDuration={6000}>
+          <Alert onClose={handleClose} severity="error">Votre email et/ou mot de passe sont incorrect!
+          
+        </Alert>
+        
+              
+          
+          </Snackbar>
+          
+          <Snackbar open={openMessageError} autoHideDuration={6000}>
+          <Alert severity="error">Votre compte n'existe pas!
+          
+        </Alert>
+              
+          
+          </Snackbar>
+          <Snackbar open={openMessageErrorServer} autoHideDuration={6000}>
+          <Alert severity="error">Error
+          
+          
+        </Alert>
+              
+          
+          </Snackbar>
+        
         <form className={classes.form} onSubmit={submit}>
+          {dispalyError(openMessage)}
           <TextField
             variant="outlined"
             margin="normal"
@@ -119,6 +206,7 @@ export default function Login() {
             autoComplete="current-password"
             onChange={passwordChange}
           />
+         
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
