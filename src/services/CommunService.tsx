@@ -18,7 +18,7 @@ export default class CommunService {
      */
 
     processGetOne(id:any){
-        return axios.get(this.url+"/"+id);
+        return axios.get(this.url+"/"+id,{ headers: auth.authHeader() });
     }
 
     /**
@@ -27,14 +27,14 @@ export default class CommunService {
      */
     
      processPostOne(entity:any){
-         return axios.post(this.url,entity);
+         return axios.post(this.url,entity,{ headers: auth.authHeader() });
      }
      
      /**
       *  delete one
       */
      processDeleteOne(id:any){
-         return axios.delete(this.url+"/"+id);
+         return axios.delete(this.url+"/"+id,{ headers: auth.authHeader() });
      }
      /**
       * update one
@@ -42,7 +42,7 @@ export default class CommunService {
       * @param values values to be update
       */
      processPutOne(id:any,values:any){
-         return axios.put(this.url+"/"+id,values);
+         return axios.put(this.url+"/"+id,values,{ headers: auth.authHeader() });
      }
 
 

@@ -7,6 +7,7 @@ import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import {Link, RouteComponentProps} from "react-router-dom";
 import {withRouter} from 'react-router-dom';
+import loc from "./../locale/I18n";
 
 interface State {
 
@@ -17,62 +18,52 @@ interface Props extends RouteComponentProps{
 
 
 
- class SideMenu extends React.Component<Props, State>{
+ function SideMenu(props:Props){
+
+    
 
 
-
-    constructor(props: Props) {
-        let mstate: State = {};
-        super(props, mstate);
-        this.state = mstate;
-    }
-
-    getClassNameFromRoute(route: string) {
+   const  getClassNameFromRoute = (route: string) => {
         
         
-        if (this.props.location.pathname === route) {
+        if (props.location.pathname === route) {
             return "menubutton active"
         } else {
             return "menubutton";
         }
-    }
-
-
-
-
-    render() {
+    } 
 
         return (<div>
-            <ListItem button className={this.getClassNameFromRoute("/")} >
+            <ListItem button className={getClassNameFromRoute("/")} >
 
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
                 
-                <Link to="/">Dashboard</Link>
+                <Link to="/">{loc('main.dashbord')}</Link>
  
                
             </ListItem>
-            <ListItem button className={this.getClassNameFromRoute("/tests")}>
+            <ListItem button className={getClassNameFromRoute("/tests")}>
                 <ListItemIcon>
                     <BarChartIcon />
                 </ListItemIcon>
-                <Link to="/tests">Tests/Questions</Link>
+                <Link to="/tests">{loc('main.questionaire')}</Link>
             </ListItem>
-            <ListItem button className={this.getClassNameFromRoute("/users")}>
+            <ListItem button className={getClassNameFromRoute("/results")}>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
-                <Link to="/users">Users</Link>
+                <Link to="/results">{loc('main.results')}</Link>
             </ListItem>
-            <ListItem button className={this.getClassNameFromRoute("/settings")}>
+            <ListItem button className={getClassNameFromRoute("/settings")}>
                 <ListItemIcon>
                     <LayersIcon />
                 </ListItemIcon>
                 <Link to="/settings">Settings</Link>
             </ListItem>
         </div>);
-    }
+    
 }
 
 export default withRouter(SideMenu);

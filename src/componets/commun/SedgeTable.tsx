@@ -1,122 +1,128 @@
 import * as React from 'react';
-import MaterialTable, { Column } from 'material-table';
-import  CommunService from "./../../services/CommunService";
+import MaterialTable, { Column, QueryResult } from 'material-table';
+import CommunService from "./../../services/CommunService";
 import auth from "./../../userstuff/Authaurization";
+import loc from "./../../locale/I18n";
 
 interface SedgeTableState {
   columns: Array<Column<any>>;
   data: any;
-  update:any;
-  delete:any;
-  actions:any
+  update: any;
+  delete: any;
+  actions: any
+
 
 }
 
 interface SedgeTableProp {
- oncreate:any;
- url:string
+  oncreate: any;
+  url: string
+  title?: string | undefined
+  columns: Array<Column<any>>;
+  onedit?: (editObject: any) => void;
 }
-export default class SedgeTable extends React.Component<SedgeTableProp,SedgeTableState>{
 
-  state:SedgeTableState={columns:[],data:[],actions:[],update:{},delete:{}};
-  tableRef:any;
-  service:CommunService;
-  constructor(props:SedgeTableProp,mstate:SedgeTableState){
-    super(props,mstate);
-    this.state=mstate;
-    this.service = new CommunService(this.props.url);
-    
-    this.tableRef = React.createRef();
+
+
+export default function SedgeTable(props: SedgeTableProp) {
+  /**
+ * definition de la localisation
+ */
+  const localisation = {
+    body: {
+      emptyDataSourceMessage: "",
+      deleteTooltip: loc("delete"),
+      editRow: {
+        deleteText: loc("table.deleteMessage")
+      }
+    },
+    toolbar: {
+      searchTooltip: loc("table.toolbar.searchTooltip"),
+      searchPlaceholder: loc("table.toolbar.searchPlaceholder")
+    },
+    pagination: {
+      labelRowsSelect: loc("table.pagination.labelRowsSelect"),
+      labelDisplayedRows: loc("table.pagination.labelDisplay"),
+      firstTooltip: loc("table.pagination.first"),
+      previousTooltip: loc("table.pagination.prev"),
+      nextTooltip: loc("table.pagination.next"),
+      lastTooltip: loc("table.pagination.last")
+    }
   }
 
-  componentWillMount(){
-    this.setState({
-      columns: [
-        { title: "Title", field: "title" },
-        { title: "CD", field: "createDate" },
-        { title: "Category", field: "categorieTest.moduleName" },
-      ]});
-     this.setState({data:(query:any)=> new Promise((resolve,reject)=>{
-       console.log(query);
-      this.service.processSearch({pageNumber:(query.page + 1),size:query.pageSize,sorts:{id:"DESC"}})
-      .then(resp=>{
+  const service = new CommunService(props.url);
+  const tableRef: any = React.createRef();
+  const data = (query: any) => new Promise<QueryResult<any>>((resolve, reject) => {
+
+    service.processSearch({ pageNumber: (query.page + 1), size: query.pageSize, sorts: { id: "DESC" } })
+      .then(resp => {
         resolve({
           data: resp.data.rows,
           page: resp.data.pageNumber - 1,
           totalCount: resp.data.totalOfElements,
         })
-        }).catch((error) => { 
-          if(error.response.status===403){
+      }).catch((error) => {
+        if (error.response.status === 403) {
           auth.resetLocalStoreSession();
-          //window.location.reload(false);
-          
-        } 
+         
+
+        }
         resolve({
           data: [],
           page: 0,
           totalCount: 0,
         })
       });
-     })}); 
+  });
 
-     this.setState({actions:
-      [
-        {
-          icon: "refresh",
-          tooltip: "Refresh",
-          isFreeAction: true,
-          onClick: () => this.tableRef.current && this.tableRef.current.onQueryChange(),
-        },
-        {
-          icon: "edit",
-          tooltip: "Edit",
-          onClick: (event:any, rowData:any) => alert("You saved " + rowData.title)
-        }
-        ,
-        {
-          icon: 'create_new_folder',
-          tooltip: 'Ajouter',
-          isFreeAction: true,
-          onClick: this.props.oncreate
-        }
-      ]
-     }); 
+  const [actions, setActions] = React.useState<any>(
+    [
+      {
+        icon: "refresh",
+        tooltip: loc("refresh"),
+        isFreeAction: true,
+        onClick: () => tableRef.current && tableRef.current.onQueryChange(),
+      },
+      {
+        icon: "search",
+        tooltip: loc("edit"),
+        onClick: (event: any, rowData: any) => { if (props.onedit) { props.onedit(rowData); } else { console.log("row edit action not defined") } }
+      }
+      ,
+      {
+        icon: 'create_new_folder',
+        tooltip: loc("create"),
+        isFreeAction: true,
+        onClick: props.oncreate
+      }
+    ]);
 
-     this.setState({update:(newData:any, oldData:any) =>
+  const doDelete =
+    (oldData: any) =>
       new Promise((resolve) => {
-        this.service.processPutOne(newData.id,newData).then(resp =>{
+        service.processDeleteOne(oldData.id).then(resp => {
           resolve();
-          
-        });
-       
-        
-        })
-     }); 
 
-     this.setState({delete:(oldData:any) =>
-      new Promise((resolve) => {
-        this.service.processDeleteOne(oldData.id).then(resp =>{
-          resolve();
-          
         });
-      })
-     }); 
-     
-  } 
-  render(){
-    return (
-      <MaterialTable
-      title="Liste des tests"
-      columns={this.state.columns}
-      data={this.state.data}
-      tableRef={this.tableRef}
+      });
+
+
+  return (
+    <MaterialTable
+      title={props.title}
+      columns={props.columns}
+      data={data}
+      tableRef={tableRef}
       editable={{
-        onRowDelete: this.state.delete, 
+        onRowDelete: doDelete,
       }}
-      actions={this.state.actions}
+      actions={actions}
+
+      localization={localisation}
+
     />
-    );
-  }
+  );
+
 }
 
 

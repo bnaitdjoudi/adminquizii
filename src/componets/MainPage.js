@@ -25,7 +25,10 @@ import Quiz from "./Quiz";
 import PrivateRoute from "./commun/PrivateRoute";
 import {Switch,Route} from "react-router-dom";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-
+import DetailQuiz from './quizs/DetailQuiz';
+import QuestionsForm from './quizs/QuestionsForm';
+import { connect } from "react-redux";
+import Results from './results/Result';
 
 
 function Copyright() {
@@ -123,7 +126,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainPage() {
+function MainPage() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -165,11 +168,12 @@ export default function MainPage() {
             <Badge badgeContent={4} color="secondary" title="Notifications panel">
               <NotificationsIcon />
             </Badge>
-            <IconButton color="inherit" component="span" title="Logout" onClick={sigout}>
-          <ExitToAppIcon/>
-        </IconButton>
+           
 
           </IconButton>
+          <IconButton color="inherit" component="span" title="Logout" onClick={sigout}>
+          <ExitToAppIcon/>
+        </IconButton>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -191,17 +195,29 @@ export default function MainPage() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="" className={classes.container}>
+        <Container  className={classes.container}>
         <Switch>
 
-          <Route path="/users">
-            <Orders />
+          <Route path="/results">
+            <Results />
           </Route>
 
+          <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id/createquestion" component={QuestionsForm}/>
+          <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id/question/:qid/update" component={QuestionsForm}/>
+           
+          "/tests/"+qid+"/updatequestion"
+           
+          <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id" component={DetailQuiz}/>
+           
+           
+          
           <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests">
            <Quiz/>
           </PrivateRoute>
 
+         
+          
+          
           <Route path="/settings">
           <Settings/>
           </Route>
@@ -219,3 +235,4 @@ export default function MainPage() {
     </div>
   );
 }
+export default connect (null,null)(MainPage)

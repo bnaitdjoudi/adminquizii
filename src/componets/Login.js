@@ -1,4 +1,4 @@
-import React from 'react';
+import React  from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import loginService from './../services/LoginService';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import loc from './../locale/I18n';
 
 
 function Copyright() {
@@ -22,7 +23,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        {loc('title')}
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -85,6 +86,7 @@ export default function Login() {
 
   }
   return (
+   
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -92,7 +94,7 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Signin
+          {loc('user.signin')}
         </Typography>
         <form className={classes.form} onSubmit={submit}>
           <TextField
@@ -101,7 +103,7 @@ export default function Login() {
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label={loc('user.email')}
             name="email"
             autoComplete="email"
             autoFocus
@@ -113,7 +115,7 @@ export default function Login() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label={loc('user.password')}
             type="password"
             id="password"
             autoComplete="current-password"
@@ -121,7 +123,7 @@ export default function Login() {
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label={loc('user.remeber')}
           />
           <Button
             type="submit"
@@ -132,7 +134,7 @@ export default function Login() {
             disabled={open}
 
           >
-            Sign In
+            {loc('user.tosignin')}
           </Button>
           <Backdrop open={open} >
         <CircularProgress color="inherit" />
@@ -140,12 +142,12 @@ export default function Login() {
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                {loc('user.pwdforgot')}
               </Link>
             </Grid>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              {loc('user.nocount')}
               </Link>
             </Grid>
           </Grid>

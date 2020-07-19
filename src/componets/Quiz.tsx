@@ -2,23 +2,58 @@ import * as React from "react";
 import MenuBar from "./MenuBar";
 import SedgeTable from "./commun/SedgeTable";
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import RemoteCombobox from "./commun/RemoteCombobox";
-import QuizService from "./../services/QuizService";
-import {URL_TEST} from "./../config/Urls";
+import { URL_TEST } from "../config/Urls";
+import { Column } from 'material-table';
+import { useHistory } from "react-router-dom";
+import QuizForm from "./quizs/QuizForm";
+import loc from "../locale/I18n";
+import Typography from '@material-ui/core/Typography';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+import Link from '@material-ui/core/Link';
+import HomeIcon from '@material-ui/icons/Home';
+
+const columns: Array<Column<any>> = [
+  { title: "Title", field: "title" },
+  { title: "CD", field: "createDate" },
+  { title: "Comapgn", field: "compagn.title" },
+]
+
+
+
+
+ function SimpleBreadcrumbs() {
+
+  let history = useHistory();
+
+  return (
+
+    <div style={{padding:"12px 0px 0px 0px"}}>
+    <Breadcrumbs aria-label="breadcrumb">
+      
+      <Link color="primary"  onClick={()=>{
+       history.push("/");
+      
+      }} >
+        <HomeIcon/>
+      </Link>
+     
+    <Typography color="textPrimary">{loc("main.questionaire")}</Typography>
+    </Breadcrumbs>
+    </div>
+  );
+}
 
 export default function Quiz() {
+  
 
   const [open, setOpen] = React.useState(false);
-  const [title, setTitle] = React.useState<string>("");
-  const [selectedCategorie, setSelectedCategorie] = React.useState<any>({});
+ 
 
-  let service:QuizService= new QuizService();
-
+  let history = useHistory();
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -30,55 +65,50 @@ export default function Quiz() {
   const createQuize = () => {
     handleClickOpen();
   };
-  const onChangeCategorie = (value:any) =>{
-  console.log("coucou:"+value.moduleName);
-  setSelectedCategorie(value);
+ 
+
+  /**
+   * row edit
+   * @param item 
+   */
+  const rowEditEvent = (item: any) => {
+    history.push("/tests/"+item.id);
   }
 
-  const getLabelOption = (item: any) => item.moduleName;
-
-  const handleSubmit = () =>{
-    service.createquize({title:title,categorieTest:selectedCategorie}).then((resp)=>{
-      handleClose();
-    });
+  const onsucces = () => { 
+    console.log("succes");
+    handleClose();
   }
-  
+
+  const onfail = () => { 
+    console.log("coucou");
+  }
+
 
   return (<React.Fragment>
-    <MenuBar />
-    <SedgeTable oncreate={createQuize} url={URL_TEST} />
+    <MenuBar content={<SimpleBreadcrumbs/>} />
+    <SedgeTable
+      oncreate={createQuize}
+      url={URL_TEST}
+      title="Liste des tests"
+      columns={columns}
+      onedit={rowEditEvent} />
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
       <DialogTitle id="form-dialog-title">Création d'un test</DialogTitle>
       <DialogContent>
 
-        <TextField
-          onChange={(event:any)=>{
-            setTitle(event.target.value);
-          }}
-          autoFocus
-          margin="dense"
-          id="name"
-          label="Title"
-          type="text"
-          fullWidth
-        />
+      <QuizForm onfail={onfail} onsucces={onsucces} />
 
-        <RemoteCombobox
-          fullWidth
-          onChange={onChangeCategorie}
-          label="Categorie"
-          getOptionLabel={getLabelOption}
-          id="combo-type-test"
-          url="http://localhost:8081/categorie_test" />
+      
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
-          Cancel
+        <Button  onClick={handleClose} color="primary">
+          {loc("close")}
           </Button>
-        <Button onClick={handleSubmit} color="primary">
-          Submit
+        <Button type="submit" form="quizform"  color="primary">
+          {loc("validate")}
           </Button>
-      </DialogActions>
+      </DialogActions> 
     </Dialog>
   </React.Fragment>);
 }

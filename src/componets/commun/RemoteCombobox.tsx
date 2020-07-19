@@ -1,68 +1,120 @@
-import * as React from "react";
+import fetch from 'cross-fetch';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import CommunService from "./../../services/CommunService";
+import CircularProgress from '@material-ui/core/CircularProgress';
+import auth from "./../../userstuff/Authaurization";
+import axios from "axios";
 
-interface ComboProps {
-    getOptionLabel:any
-    style?:any
-    label:string
-    id?:string
-    url:string
-    onChange?:any;
-    value?:any;
-    fullWidth:true|undefined
 
+function sleep(delay = 0) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, delay);
+    });
 }
-
-interface ComboState {
-  items:any[];
-  value:any;
-  
-}
-
-export default class RemoteCombobox extends React.Component<ComboProps, ComboState>{
-
-    state!: ComboState;
-    service!:CommunService;
+interface RemoteComboProps {
+    url: string
+    required?: boolean;
+    onSelectedChange?:(newValue:any)=> void;
+    value:any
     
+}
 
-    constructor(props: ComboProps, mstate: ComboState) {
-        super(props,mstate);
-        this.state = mstate;
+export default function RemoteCombobox(props: RemoteComboProps,ref:any) {
+    const [open, setOpen] = React.useState(false);
+    const [options, setOptions] = React.useState<any[]>([]);
+    const loading = open && options.length === 0;
+    const [fieldValue, setFieldValue] = React.useState<string>("");
+    const [value,setValue] = React.useState();
+    const updateOption = () => {        
+            axios.post(props.url,{like:fieldValue},{ headers: auth.authHeader() }).then(resp=>{
+                const datas = resp.data;
+                setOptions(datas);
+                setOpen(true);
+            }); 
 
     }
 
-    componentWillMount(){
-     this.service=new CommunService(this.props.url);
-     this.service.processGetAll().then(resp =>{
-        this.setState({items:resp.data});
-     });
-     
-    }
+    //const memoizedValue = React.useMemo(() => {}, [fieldValue]);
+    React.useEffect(() => {
+        let active = true;
+        
+        
 
-    handleChange(value:any){
-        if(this.props.onChange){
-            this.props.onChange(value) ;
+        (async () => {
+            axios.post(props.url,{like:fieldValue},{ headers: auth.authHeader() }).then(
+                resp =>{
+                    console.log("service");
+                    const countries =  resp.data;
+
+                    if (active) {
+                        setOptions(countries);
+                    }
+
+                
+                }
+            ); 
+            
+            
+        })();
+
+        return () => {
+            active = false;
+        };
+    }, [fieldValue]);
+
+    React.useEffect(() => {
+        if (!open) {
+            setOptions([]);
         }
-        //this.setState({value:value});
-    
-    }
-    
-    render() {
-        return (
-            <Autocomplete
-              
-                onChange={(event: any, newValue: any | null) => {
-                   this.handleChange(newValue);
-                  }}
-                id={this.props.id}
-                options={this.state.items}
-                getOptionLabel={this.props.getOptionLabel}
-                style={this.props.style}
-                renderInput={(params) => <TextField fullWidth={this.props.fullWidth} {...params} label={this.props.label} variant="outlined"
-                   />}
-            />
-        );
-    }
+    }, [open]);
+
+    return (
+        <Autocomplete
+            
+            autoComplete
+            value={props.value}
+            id="asynchronous-demo"
+            style={{ width: 414 }}
+            open={open}
+            onOpen={() => {
+                setOpen(true);
+            }}
+            onClose={() => {
+                setOpen(false);
+            }}
+            getOptionSelected={(option, value) => option.compagnRef === value.compagnRef}
+            getOptionLabel={(option) => option.title+"["+option.compagnRef+"]"}
+            options={options}
+            loading={loading}
+            onInputChange={(event, newInputValue) => {
+                setFieldValue(newInputValue);
+                console.log("value changed");
+              }}
+            onChange={(event:any, newValue:any) => {
+                if(props.onSelectedChange){
+                    props.onSelectedChange(newValue);
+                }
+                
+              }}
+            renderInput={(params) => (
+                <TextField
+                    {...params}
+                    
+                    label="Asynchronous"
+                    variant="outlined"
+                    required={props.required}
+                    InputProps={{
+                        ...params.InputProps,
+                        endAdornment: (
+                            <React.Fragment>
+                                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                                {params.InputProps.endAdornment}
+                            </React.Fragment>
+                        ),
+                    }}
+                />
+            )}
+        />
+    );
 }

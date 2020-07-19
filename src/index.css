@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.pink_column{
+  background-color: #F6ECF1;
+  text-transform: capitalize;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
