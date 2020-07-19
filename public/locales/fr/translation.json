@@ -1,0 +1,107 @@
+{
+  "title": "Ton site web",
+  "edit": "Editer",
+  "delete": "Supprimer",
+  "refresh":"Actualiser",
+  "create":"Ajouter",
+  "begin":"Débutant",
+  "interm":"Intermidaire",
+  "senior":"Senior",
+  "expert":"Expert",
+  "fr":"Français",
+  "en":"Englais",
+  "gb":"Englais",
+  "sp":"Espagnole",
+  "ge":"Allemand",
+  "search":"Recherche",
+  "close":"Fermer",
+  "validate":"Valider",
+  
+
+  "categories":"Categories",
+
+  
+  "main": {
+    "createq":"Nouvelle question",
+    "fromlibmessage":"Créer une question à partir de la librairie",
+    "createnewq":"Créer une nouvelle question",
+    "doc":"Date de création",
+    "compagn":"Compagne",
+    "reference":"Réference",
+    "refcompagn":"Réference compagne",
+    "general":"Informations génerales",
+    "createtest":"Nouveau test",
+    "updatetest":"Modification test",
+    "dashbord": "Tableau de bord",
+    "questionaire": "Questionaires",
+    "title":"Titre",
+    "titleb":"Titre de la question",
+    "description":"Ennoncé",
+    "multichoise":"Authorizé le multi-choix",
+    "response":"Option",
+    "iscorrect":"Réponse correcte",
+    "back":"Retour",
+    "next":"Suivant",
+    "questdescription":"Déscription de la question",
+    "queststatement":"Ennoncé de la question",
+    "respdescription":"Definition des réponses",
+    "timein":"Durée en min",
+    "results":"Resultats",
+    "lientest":"Copier le lien du test"
+  },
+  "user": {
+    "signin": "Connection",
+    "tosignin": "Se connecter",
+    "signout": "Déconnection",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "remeber": "Se rappler de moi",
+    "pwdforgot": "Mot de passe oublié?",
+    "nocount": "Pas encore inscrit? S'inscrire"
+  }
+  ,
+  "table": {
+  "deleteMessage":"Voulez vous vraiment suppprimer cette ligne?",
+  "pagination":{
+    "next":"Suivant",
+    "prev":"Précédant",
+    "last":"Dernier",
+    "first":"Premier",
+    "labelDisplay":" {from}-{to} à {count}",
+    "labelRowsSelect":"Ligne"
+    
+  },
+  "toolbar":{
+    "searchTooltip":"Rechercher",
+    "searchPlaceholder":"Rechercher"
+  }}
+, 
+  "message":{
+    "delete":"Voulez vous vraiment suppprimer cette donnée?",
+    "success":"L'operation s'ai déroulé avec succés!"
+  },
+  "librarie":{
+    "dialog":{
+      "title":"Librairie des questions"
+    }
+    ,
+    "table":{
+      "level":"Niveau",
+      "lang":"Langue",
+      "score" :"Points",
+      "time":"Durée",
+      "paging":{
+        "labelRowsPerPage":"Lignes par page:"
+        
+      }
+      
+    }
+  }
+  ,
+  "result":{
+    "title":"Test [Titre]",
+    "condidat":"Condidat [Email]",
+    "cd":"Momentum"
+  }
+  
+}

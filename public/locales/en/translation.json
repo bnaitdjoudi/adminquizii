@@ -1,0 +1,97 @@
+{
+  "title": "Your web site",
+  "edit": "Edit",
+  "delete": "Delete",
+  "refresh": "Refresh",
+  "create": "Create",
+  "begin": "debutant",
+  "interm": "Intermidaire",
+  "senior": "Senior",
+  "expert": "Expert",
+  "fr": "Frensh",
+  "en": "English",
+  "gb": "English",
+  "sp": "Spannish",
+  "ge": "German",
+  "search": "Search",
+  "categories": "Categories",
+  "close": "Close",
+  "validate": "Submit",
+  "main": {
+    "createq": "New question",
+    "fromlibmessage": "Create a question from librairy",
+    "createnewq": "Create my own question",
+    "doc": "Creation date",
+    "compagn": "Compagne",
+    "reference": "Reference",
+    "refcompagn": "Comapgn reference",
+    "general": "General informations",
+    "createtest": "New test",
+    "updatetest": "Test update",
+    "dashbord": "Dashbord",
+    "questionaire": "Tests/Questions",
+    "title": "Title",
+    "description": "Statement",
+    "titleb": "Question title",
+    "multichoise": "Authorizé le multi-choix",
+    "response": "Option",
+    "iscorrect": "Is correct answer",
+    "back": "Back",
+    "next": "Next",
+    "questdescription": "Question description",
+    "queststatement": "Question statement",
+    "respdescription": "Responses",
+    "timein": "Time en min",
+    "results": "Results",
+    "lientest":"Copier le lien du test"
+  },
+  "user": {
+    "signin": "Signin",
+    "tosignin": "Signin",
+    "signout": "Sign out",
+    "username": "User  name",
+    "password": "Password",
+    "email": "Email",
+    "remeber": "Remember me",
+    "pwdforgot": "Forgot password?",
+    "nocount": "Don't have an account? Sign Up"
+  },
+  "table": {
+    "deleteMessage": "Are you sure delete this row?",
+    "pagination": {
+      "next": "Next",
+      "prev": "Previous",
+      "last": "Last",
+      "first": "First",
+      "labelDisplay": " {from}-{to} to {count}",
+      "labelRowsSelect": "Row"
+    },
+    "toolbar": {
+      "searchTooltip": "Search",
+      "searchPlaceholder": "Search"
+    }
+  },
+  "message": {
+    "delete": "Voulez vous vraiment suppprimer cette donnée?",
+    "success": "Operation succes!"
+  },
+  "librarie": {
+    "dialog": {
+      "title": "Librarie Questions"
+    },
+    "table": {
+      "level": "Level",
+      "lang": "Language",
+      "score": "Score",
+      "time": "Duration",
+      "paging": {
+        "labelRowsPerPage": "Rows per page:"
+      }
+    }
+  },
+  "result": {
+    "title": "Test [Title]",
+    "condidat": "Condidat [Email]",
+    "cd": "Momentum"
+  }
+}

@@ -31,6 +31,8 @@ function Copyright() {
   );
 }
 
+
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -56,6 +58,9 @@ export default function Login() {
   const [email, setEmail] = React.useState();
   const [password, setPassword] = React.useState();
   const [open, setOpen] = React.useState(false);
+  const [openMessage, setOpenMessage] = React.useState(false);
+  const [openMessageError, setOpenMessageError] = React.useState(false);
+  const [openMessageErrorServer, setOpenMessageErrorServer] = React.useState(false);
 
   const emailChange = (event) => {
     setEmail(event.target.value);
@@ -65,6 +70,44 @@ export default function Login() {
     setPassword(event.target.value);
   }
 
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpenMessage(false);
+    setOpenMessageError(false);
+    setOpenMessageErrorServer(false);
+  };
+  function dispalyError (open,messageError){
+    if (open) {
+      return (
+        <div>
+          <Alert action={<IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setOpenMessage(false);
+                setOpenMessageError(false);
+                setOpenMessageErrorServer(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>} 
+          severity="error">{messageError}</Alert>
+         
+        </div>
+        
+      );
+    }
+    else{
+      return;
+  
+    }
+  };
+  
   const submit = (event) => {
     event.preventDefault();
     setOpen(true);
@@ -81,6 +124,17 @@ export default function Login() {
     }).catch((event)=>{
       console.log(event.response.status);
       setOpen(false)
+      if (event.response.status===401){
+        setOpenMessage(true)
+      }
+      if (event.response.status===404){
+        setOpenMessageError(true)
+      }
+      if (event.response.status===505){
+        setOpenMessageErrorServer(true)
+      }
+      
+      
 
       })
 
@@ -96,7 +150,11 @@ export default function Login() {
         <Typography component="h1" variant="h5">
           {loc('user.signin')}
         </Typography>
+
         <form className={classes.form} onSubmit={submit}>
+          {dispalyError(openMessage,"Votre email ou/et votre mot de passe dont incorrecte!")}
+          {dispalyError(openMessageError,"Votre compte n'existe pas!")}
+          {dispalyError(openMessageErrorServer,"Erreur veuillez contacter...")}
           <TextField
             variant="outlined"
             margin="normal"
@@ -121,6 +179,7 @@ export default function Login() {
             autoComplete="current-password"
             onChange={passwordChange}
           />
+         
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label={loc('user.remeber')}
