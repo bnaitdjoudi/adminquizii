@@ -1,4 +1,4 @@
-import action from "./action";
+import Action from "./action";
 const initialState = {
   text: "",
   score: 0,
@@ -9,7 +9,7 @@ const initialState = {
   novalide: true
 };
 
-function librairieReducer(state = initialState, action: action) {
+function librairieReducer(state = initialState, action: Action) {
 
   if (action.type === "UPDATE_LIB_TEXT") {
     state = { ...state,selected:[], text: action.payload.text }
@@ -44,7 +44,7 @@ function librairieReducer(state = initialState, action: action) {
 
     var selected: any[] = state.selected;
     selected.push(action.payload.el);
-    state = { ...state, selected: selected, novalide: (selected.length == 0) }
+    state = { ...state, selected: selected, novalide: (selected.length === 0) }
   }
 
   if ("DELETE_TO_SELECT" === action.type) {
@@ -54,9 +54,9 @@ function librairieReducer(state = initialState, action: action) {
       })
     }
 
-    var selected: any[] = state.selected;
+    selected = state.selected;
 
-    state = { ...state, novalide: (selected.length == 0) }
+    state = { ...state, novalide: (selected.length === 0) }
     
   }
 

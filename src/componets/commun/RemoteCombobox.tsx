@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch';
+
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -7,16 +7,14 @@ import auth from "./../../userstuff/Authaurization";
 import axios from "axios";
 
 
-function sleep(delay = 0) {
-    return new Promise((resolve) => {
-        setTimeout(resolve, delay);
-    });
-}
+
 interface RemoteComboProps {
     url: string
     required?: boolean;
     onSelectedChange?:(newValue:any)=> void;
-    value:any
+    value:any;
+    label:string;
+    
     
 }
 
@@ -25,15 +23,7 @@ export default function RemoteCombobox(props: RemoteComboProps,ref:any) {
     const [options, setOptions] = React.useState<any[]>([]);
     const loading = open && options.length === 0;
     const [fieldValue, setFieldValue] = React.useState<string>("");
-    const [value,setValue] = React.useState();
-    const updateOption = () => {        
-            axios.post(props.url,{like:fieldValue},{ headers: auth.authHeader() }).then(resp=>{
-                const datas = resp.data;
-                setOptions(datas);
-                setOpen(true);
-            }); 
-
-    }
+    
 
     //const memoizedValue = React.useMemo(() => {}, [fieldValue]);
     React.useEffect(() => {
@@ -61,7 +51,7 @@ export default function RemoteCombobox(props: RemoteComboProps,ref:any) {
         return () => {
             active = false;
         };
-    }, [fieldValue]);
+    }, [fieldValue,props.url]);
 
     React.useEffect(() => {
         if (!open) {
@@ -84,7 +74,7 @@ export default function RemoteCombobox(props: RemoteComboProps,ref:any) {
                 setOpen(false);
             }}
             getOptionSelected={(option, value) => option.compagnRef === value.compagnRef}
-            getOptionLabel={(option) => option.title+"["+option.compagnRef+"]"}
+            getOptionLabel={(option) =>  option.title?option.title+"["+option.compagnRef+"]":""}
             options={options}
             loading={loading}
             onInputChange={(event, newInputValue) => {
@@ -101,7 +91,7 @@ export default function RemoteCombobox(props: RemoteComboProps,ref:any) {
                 <TextField
                     {...params}
                     
-                    label="Asynchronous"
+                    label={props.label}
                     variant="outlined"
                     required={props.required}
                     InputProps={{

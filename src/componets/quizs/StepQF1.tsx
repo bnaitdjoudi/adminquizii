@@ -81,7 +81,7 @@ function StepQF1(props: any) {
         service.processGetAll().then((resp) => {
             setOptions(resp.data);
         })
-    }, []);
+    }, [service]);
 
 
 
@@ -121,9 +121,9 @@ function StepQF1(props: any) {
                                         'insertdatetime media table paste code help wordcount'
                                     ],
                                     toolbar:
-                                        'undo redo | formatselect | bold italic backcolor | \
-                                         alignleft aligncenter alignright alignjustify | \
-                                         bullist numlist outdent indent | removeformat | codesample | help'
+                                        `undo redo | formatselect | bold italic backcolor | 
+                                         alignleft aligncenter alignright alignjustify | 
+                                         bullist numlist outdent indent | removeformat | codesample | help`
                                 }}
                                 onEditorChange={handleEditorChange}
 
@@ -132,6 +132,9 @@ function StepQF1(props: any) {
                         </div>
                     </Paper>
                 </Grid>
+                {
+
+                }
                 <Grid item xs={4}>
                     <Paper className={classes.paper} >
 

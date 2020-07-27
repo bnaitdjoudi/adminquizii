@@ -1,5 +1,5 @@
 import React from "react";
-import { Paper, Switch, FormControlLabel } from "@material-ui/core";
+import { Switch, FormControlLabel } from "@material-ui/core";
 import Title from "../Title";
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import { Editor } from '@tinymce/tinymce-react';
@@ -66,9 +66,9 @@ function Response(props: any) {
                         'insertdatetime media table paste code help wordcount'
                     ],
                     toolbar:
-                        'undo redo | formatselect | bold italic backcolor | \
-                                         alignleft aligncenter alignright alignjustify | \
-                                         bullist numlist outdent indent | removeformat | codesample | help'
+                        `èundo redo | formatselect | bold italic backcolor | 
+                                         alignleft aligncenter alignright alignjustify | 
+                                         bullist numlist outdent indent | removeformat | codesample | help`
                 }}
                               
 

@@ -80,7 +80,7 @@ function QuiestionFilter(props: any) {
         service.processGetAll().then((resp) => {
             setOptions(resp.data);
         })
-    }, []);
+    }, [service]);
 
     const onSearchClick = (event:any) =>{
         props.dispatch(updateLibText({ text:text }));

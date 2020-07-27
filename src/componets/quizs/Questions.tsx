@@ -18,7 +18,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+
 import Grid from '@material-ui/core/Grid';
 import CreateNewFolderIcon from '@material-ui/icons/CreateNewFolder';
 import CommunService from "./../../services/CommunService";
@@ -198,6 +198,8 @@ interface EnhancedTableToolbarProps {
   selected: any[];
   questions: string[];
   performRefresh: () => void;
+  isSondage:boolean;
+  
 
 }
 
@@ -214,7 +216,9 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
 
   const createQuestion = () => {
     props.initStore();
+    
     setOpen(true);
+    
   }
 
   const toNewQuestion = (event: any) => {
@@ -421,7 +425,7 @@ function Questions(props: any) {
     service.processGetAll().then((resp: any) => {
       setRows(resp.data);
     })
-  }, [refreshCount]);
+  }, [refreshCount,service]);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -467,9 +471,7 @@ function Questions(props: any) {
     setPage(0);
   };
 
-  const handleChangeDense = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setDense(event.target.checked);
-  };
+ 
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
@@ -489,11 +491,11 @@ function Questions(props: any) {
       let reponsesText = { "A": "", "B": "", "C": "", "D": "", "E": "", "F": "" };
 
       const question: any = resp.data;
-      question.responses.map((value: any, index: any) => {
+      question.responses.forEach((value: any, index: any) => {
         resps = [...resps, value.valide]
       });
 
-      question.responses.map((value: any, index: any) => {
+      question.responses.forEach((value: any, index: any) => {
 
         switch (index) {
           case 0: {
@@ -567,7 +569,7 @@ function Questions(props: any) {
         <CircularProgress color="inherit" />
       </Backdrop>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar performRefresh={performRefresh} selected={props.selected} questions={selected} numSelected={selected.length} testId={props.test} initStore={() => {
+        <EnhancedTableToolbar isSondage={props.isSondage?props.isSondage:false} performRefresh={performRefresh} selected={props.selected} questions={selected} numSelected={selected.length} testId={props.test} initStore={() => {
           props.dispatch(initStore());
         }} />
         <TableContainer>

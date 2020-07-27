@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -37,10 +36,6 @@ export default function ConfirmationDialog(props:ConfirmationDialogProp){
   
     const handleOk = () => {
      props.onconfirm("");
-    };
-  
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      //setValue((event.target as HTMLInputElement).value);
     };
   
     return (

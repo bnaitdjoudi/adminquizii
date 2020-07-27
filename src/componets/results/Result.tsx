@@ -1,6 +1,5 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
-import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
 import MenuBar from "../MenuBar";
 import loc from "../../locale/I18n";
@@ -102,7 +101,7 @@ function SimpleBreadcrumbs() {
     
 
     let history = useHistory();
-    const classes = useStyles();
+   
     return (
 
         <div style={{ padding: "12px 0px 0px 0px" }}>
@@ -132,25 +131,20 @@ export default function Results() {
       ]
 
     let history = useHistory();
-    const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
+   
+    
 
     const handleClickOpen = () => {
-        setOpen(true);
+        //setOpen(true);
       };
 
-    const handleClose = () => {
-        setOpen(false);
-      };
+   
     
       const createQuize = () => {
         handleClickOpen();
       };
 
-      const rowEditEvent = (item: any) => {
-    
-        history.push("/tests/"+item.id);
-      }
+      
 
     return (
         <React.Fragment>

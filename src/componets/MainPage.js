@@ -17,7 +17,6 @@ import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import Orders from "./Orders";
 import SideMenu from "./SideMenu";
 import Dashboad from "./Dashboard";
 import Settings from "./Settings";

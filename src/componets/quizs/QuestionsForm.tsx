@@ -36,9 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-function getSteps() {
-    return ['Déscription de la question', 'Definition des réponses'];
-}
 
 
 function QuestionsForm(props: any) {
@@ -46,63 +43,17 @@ function QuestionsForm(props: any) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set<number>());
-    const [title, setTitle] = React.useState<string>();
+    
 
-    const [description, setDescription] = React.useState<string>();
-    const [level, setLevel] = React.useState<string>();
-    const [lang, setLang] = React.useState<string>();
-    const [categories, setCategories] = React.useState<any[]>();
-    const [score, setScore] = React.useState<number>();
-    const [time, setTime] = React.useState<number>();
+    
     const [multip, setMultip] = React.useState<boolean>(false);
 
-    const [reponseA, setResponseA] = React.useState<String>();
-    const [reponseB, setResponseB] = React.useState<String>();
-    const [reponseC, setResponseC] = React.useState<String>();
-    const [reponseD, setResponseD] = React.useState<String>();
-    const [reponseE, setResponseE] = React.useState<String>();
-    const [reponseF, setResponseF] = React.useState<String>();
+    
     const [waitOpen,setWaitOpen] = React.useState<boolean>(false);
     let history = useHistory();
 
 
     const steps = [loc("main.questdescription"), loc("main.respdescription")];
-
-    const onTitleChange = (value: string) => {
-        setTitle(value);
-        //console.log("coucou:"+value);
-    }
-
-    const onDescriptionChange = (value: string) => {
-        setDescription(value);
-        //console.log("coucou:"+value);
-    }
-
-    const onLevelChange = (value: string) => {
-        setLevel(value);
-        //console.log("coucou"+value);
-    }
-
-    const onLongChange = (value: string) => {
-        setLang(value);
-
-    }
-
-    const onCategoriesChange = (value: any[]) => {
-        setCategories(value);
-
-    }
-
-    const onScoreChange = (value: number) => {
-        setScore(value);
-
-    }
-
-    const onTimeChange = (value: number) => {
-        setTime(value);
-
-
-    }
 
 
     const onMultipRChange = (value: boolean) => {
@@ -110,59 +61,17 @@ function QuestionsForm(props: any) {
         console.log("log:" + value);
     }
 
-    const onResponseChange = (value: string, response: "A" | "B" | "C" | "D" | "E" | "F") => {
-        switch (response) {
-            case "A": {
-                setResponseA(value);
-                console.log("A:" + value);
-                break;
-            }
-            case "B": {
-                setResponseB(value);
-                console.log("B:" + value);
-                break;
-            }
-            case "C": {
-                setResponseC(value);
-                console.log("C:" + value);
-                break;
-            }
-            case "D": {
-                setResponseD(value);
-                console.log("D:" + value);
-                break;
-            }
-            case "E": {
-                setResponseE(value);
-                console.log("E:" + value);
-                break;
-            }
-            case "F": {
-                setResponseF(value);
-                console.log("F:" + value);
-                break;
-            }
-
-        }
-
-    }
 
     const getStepContent = (step: number) => {
         switch (step) {
             case 0:
                 return <StepQF1
-                    onTitleChange={onTitleChange}
-                    onDescriptionChange={onDescriptionChange}
-                    onLevelChange={onLevelChange}
-                    onLongChange={onLongChange}
-                    onCategoriesChange={onCategoriesChange}
-                    onScoreChange={onScoreChange}
-                    onTimeChange={onTimeChange}
+                    
                 />;
             case 1:
                 return <StepQF2
                     onMultipRChange={onMultipRChange}
-                    onResponseChange={onResponseChange}
+                    
                     multi={multip}
                 />;
             case 2:
@@ -172,9 +81,7 @@ function QuestionsForm(props: any) {
         }
     }
 
-    const isStepOptional = (step: number) => {
-        return step === 1;
-    };
+   
 
     const isStepSkipped = (step: number) => {
         return skipped.has(step);
@@ -239,10 +146,6 @@ function QuestionsForm(props: any) {
     };
 
 
-
-    const handleReset = () => {
-        setActiveStep(0);
-    };
 
     return (
 
@@ -318,8 +221,6 @@ const mapStateToProps = (state: any) => ({
     tags: state.root.tags
 });
 
-const mapDispatchToProps = (dispatch: any) => {
-    return { dispatch: (action: any) => { dispatch(action) } }
-};
+
 
 export default connect(mapStateToProps, null)(QuestionsForm)

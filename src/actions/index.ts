@@ -77,3 +77,7 @@ export function addToSelect(payload:any){
 export function deleteOnSelect(payload:any){
   return {type:"DELETE_TO_SELECT",payload:payload}
 }
+
+export function turnSondageEdit(payload:any){
+  return {type:"TURN_EDIT",payload:payload}
+}

@@ -2,6 +2,7 @@
   "title": "Your web site",
   "edit": "Edit",
   "delete": "Delete",
+  "add": "Add",
   "refresh": "Refresh",
   "create": "Create",
   "begin": "debutant",
@@ -25,6 +26,8 @@
     "compagn": "Compagne",
     "reference": "Reference",
     "refcompagn": "Comapgn reference",
+    "type": "Type",
+    "minscore": "Min Score",
     "general": "General informations",
     "createtest": "New test",
     "updatetest": "Test update",
@@ -73,7 +76,9 @@
   },
   "message": {
     "delete": "Voulez vous vraiment suppprimer cette donnée?",
-    "success": "Operation succes!"
+    "success": "Operation succes!",
+    "questiondescription":"Description field can't be empty!"
+
   },
   "librarie": {
     "dialog": {

@@ -1,4 +1,4 @@
-export default interface action{
+export default interface Action{
 type:string
 payload:any
 }

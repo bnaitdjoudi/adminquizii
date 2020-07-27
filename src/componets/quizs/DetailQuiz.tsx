@@ -37,6 +37,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import LinkIcon from '@material-ui/icons/Link';
 import Typography from '@material-ui/core/Typography';
 import copy from "copy-to-clipboard";  
+import SondageQuestionList from "./SondageQuestionList";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -121,28 +122,29 @@ export default function DetailQuiz(props: any) {
     const [open, setOpen] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAction, setOpenAtion] = React.useState(false);
-    const [title, setTitle] = React.useState<string>("");
+    
     const [pathTitle, setPathTitle] = React.useState<string>("");
-    const [compagn, setCompagn] = React.useState<any>({});
-    const [test, setTest] = React.useState<any>();
+    //const [compagn, setCompagn] = React.useState<any>();
+    const [test, setTest] = React.useState<any>({});
     const [openConfirmation, setOpenConfirmation] = React.useState(false);
 
     const [returnTo, setReturnTo] = React.useState(true);
 
-    const service: CommunService = new CommunService(URL_TEST);
-
+    const valideLabel = loc("validate");
+    const closeLabel = loc("close");
+    const updateLabel = loc("main.updatetest");
+    const minscoreLabel = loc("main.minscore");
 
     React.useEffect(() => {
+        let service: CommunService = new CommunService(URL_TEST);
         service.processGetOne(props.match.params.id).then((resp) => {
             setTest(resp.data);
             setOpen(false);
-            setTitle(resp.data.title);
-            //console.log(JSON.stringify(resp.data.));
-            setCompagn(resp.data.compagn);
+            
             setPathTitle("["+(resp.data&&resp.data.reference?resp.data.reference:"")+"] "+resp.data.title);
 
         })
-    }, []);
+    }, [props]);
 
 
     const onDeleteClicked = () => {
@@ -155,10 +157,11 @@ export default function DetailQuiz(props: any) {
     }
     const deleteAction = () => {
         setOpen(true);
+        let service: CommunService = new CommunService(URL_TEST);
         service.processDeleteOne(props.match.params.id).then((resp) => {
             setOpenConfirmation(false);
             setOpen(false);
-            if (resp.status == 202) {
+            if (resp.status === 202) {
                 setOpenAtion(true);
                 setReturnTo(true);
             }
@@ -166,7 +169,7 @@ export default function DetailQuiz(props: any) {
         });
     }
 
-    const getLabelOption = (item: any) => item ? item.moduleName ? item.moduleName : "no1" : "no";
+    //const getLabelOption = (item: any) => item ? item.moduleName ? item.moduleName : "no1" : "no";
     const handleDialogClose = () => {
         setOpenDialog(false);
     };
@@ -175,12 +178,13 @@ export default function DetailQuiz(props: any) {
 
     const handleSubmit = () => {
         setOpenAtion(true);
+        let service: CommunService = new CommunService(URL_TEST);
         service.processGetOne(props.match.params.id).then((resp) => {
             setTest(resp.data);
             setOpen(false);
-            setTitle(resp.data.title);
+            //setTitle(resp.data.title);
             //console.log(JSON.stringify(resp.data.categorieTest));
-            setCompagn(resp.data.compagn);
+            //setCompagn(resp.data.compagn);
         })
         handleDialogClose();
 
@@ -254,17 +258,24 @@ export default function DetailQuiz(props: any) {
 
                         </CardHeader>
                         <Grid container >
-                            <Grid xs={6} >
+                            <Grid xs={4} >
                                 <CardContent>
                                     <LabelPropertie label={loc("main.title")} value={test ? test.title : ""} />
-                                    <LabelPropertie label={loc("main.doc")} value={test ? test.createDate : ""} />
-                                    <LabelPropertie label={loc("main.compagn")} value={test ? test.compagn.title : ""} />
+                                    <LabelPropertie label={loc("main.doc")} value={test ? ""+test.createDate : ""} />
+                                    <LabelPropertie label={loc("main.compagn")} value={test&&test.compagn ? test.compagn.title : ""} />
                                 </CardContent>
                             </Grid>
-                            <Grid xs={6} >
+                            <Grid xs={4} >
                                 <CardContent>
                                     <LabelPropertie label={loc("main.reference")} value={test ? test.reference + "" : ""} />
-                                    <LabelPropertie label={loc("main.refcompagn")} value={test ? test.compagn.compagnRef : ""} />
+                                    <LabelPropertie label={loc("main.refcompagn")} value={test&&test.compagn ? test.compagn?.compagnRef : ""} />
+                                </CardContent>
+                            </Grid>
+
+                            <Grid xs={4} >
+                                <CardContent>
+                                    <LabelPropertie label={loc("main.type")} value={test ? test.type==="s"? "Sondage":"Evaluation"  : ""} />
+                                    {test && test.type==="v"? <LabelPropertie label={minscoreLabel} value={test ? ""+test.minScore : ""} />:""}
                                 </CardContent>
                             </Grid>
 
@@ -275,7 +286,11 @@ export default function DetailQuiz(props: any) {
                 </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        <Questions test={props.match.params.id} />
+                        {test?test.type==="s"?
+                         <SondageQuestionList test={props.match.params.id} />
+                        :<Questions test={props.match.params.id}  />
+                        :<Questions test={props.match.params.id}  />}
+                        
                     </Paper>
                 </Grid>
 
@@ -296,7 +311,7 @@ export default function DetailQuiz(props: any) {
             severity="success"
         />
         <Dialog open={openDialog} onClose={handleDialogClose} aria-labelledby="form-dialog-title" fullWidth>
-            <DialogTitle id="form-dialog-title">{loc("main.updatetest")}</DialogTitle>
+            <DialogTitle id="form-dialog-title">{updateLabel}</DialogTitle>
             <DialogContent>
 
 
@@ -305,13 +320,13 @@ export default function DetailQuiz(props: any) {
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleDialogClose} color="secondary" variant="contained">
-                    {loc("close")}
+                    {closeLabel}
                 </Button>
                 <Button onClick={() => {
                     setOpen(true);
                     setReturnTo(false);
                 }} type="submit" form="quizform" color="primary" variant="contained">
-                    {loc("validate")}
+                    {valideLabel}
                 </Button>
             </DialogActions>
         </Dialog>

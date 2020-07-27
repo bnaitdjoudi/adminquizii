@@ -1,13 +1,9 @@
 import React from 'react';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Title from './../Title';
 import QuizService from "../../services/QuizService";
 
-function preventDefault(event: any) {
-    event.preventDefault();
-}
 
 const useStyles = makeStyles({
     root:{
@@ -34,14 +30,19 @@ export default function CondidatQuiz(props:any) {
     const [nbrCondidat,setNbrCondidat] = React.useState(0);
     const [tauxsucces,setTauxSucces] = React.useState("0%");
     
-    const service = new QuizService();
+    
 
-    React.useEffect(() => {
+   /* React.useEffect(() => {
+        let service = new QuizService();
         service.getCondidatsTestInfo(props.testId).then(resp =>{
-             setNbrCondidat(resp.data.totalCondidat);
-             setTauxSucces(resp.data.succes);
-        })
-    }, [props]);
+            setNbrCondidat(resp.data.totalCondidat);
+            setTauxSucces(resp.data.succes);
+       }).catch(error=>{
+           console.log("dddd:"+error);
+       })
+    }, [props]);*/
+
+    
 
     return (
         <React.Fragment>

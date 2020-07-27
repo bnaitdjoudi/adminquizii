@@ -2,6 +2,7 @@
   "title": "Ton site web",
   "edit": "Editer",
   "delete": "Supprimer",
+  "add": "Ajouter",
   "refresh":"Actualiser",
   "create":"Ajouter",
   "begin":"Débutant",
@@ -34,6 +35,8 @@
     "updatetest":"Modification test",
     "dashbord": "Tableau de bord",
     "questionaire": "Questionaires",
+    "type": "Type",
+    "minscore": "Score minimum",
     "title":"Titre",
     "titleb":"Titre de la question",
     "description":"Ennoncé",
@@ -78,7 +81,8 @@
 , 
   "message":{
     "delete":"Voulez vous vraiment suppprimer cette donnée?",
-    "success":"L'operation s'ai déroulé avec succés!"
+    "success":"L'operation s'ai déroulé avec succés!",
+    "questiondescription":"Le champs énoncé ne peut vide!"
   },
   "librarie":{
     "dialog":{

@@ -23,6 +23,6 @@ return(<div style={{paddingBottom:"15px"}} >
         
        
       />)
-}): (<span>{parse(props.value)}</span>)}
+}): (<span>{parse(""+props.value)}</span>)}
          </div>)
 }

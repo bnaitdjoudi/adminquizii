@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -134,7 +134,7 @@ function QuestionExpo(props: any) {
             }).finally(() => {
 
             });
-    }, [props.filtre, page, rowsPerPage, props.text, props.lang, props.level, props.tags]);
+    }, [props.filtre, page, rowsPerPage, props.text, props.lang, props.level, props.tags,service]);
 
     return (
         <Paper className={classes.root}>

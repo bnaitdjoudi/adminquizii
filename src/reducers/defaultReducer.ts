@@ -1,4 +1,4 @@
-import action from "./action";
+import Action from "./action";
 const initialState = {
   mode:"create",
   resps: [false, false, false, false, false, false],
@@ -14,14 +14,14 @@ const initialState = {
   tags: []
 };
 
-function defaultReducer(state = initialState, action: action) {
+function defaultReducer(state = initialState, action: Action) {
   let resps: any[] = [false, false, false, false, false, false];
   switch (action.type) {
     case "UPDATE_EXPT": {
       if (!state.multi && !state.resps[action.payload.index - 1]) {
 
         resps.forEach((el: any, index: number, array: any[]) => {
-          if (index != (action.payload.index - 1)) {
+          if (index !== (action.payload.index - 1)) {
             resps[index] = false;
           } else {
             resps[index] = true;

@@ -39,7 +39,7 @@ function DetailQuestion(props: any) {
     const classes = useStyles();
     const resps: any[] = ["A", "B", "C", "D", "E", "F"];
     const service = new CommunService(URL_QUESTION);
-    const [qid, setQuestionId] = React.useState();
+    
     const [open, setOpen] = React.useState<boolean>(false);
     const [openWait, setOpenWait] = React.useState<boolean>(false);
     const [title, setTitle] = React.useState<string>();
@@ -55,7 +55,7 @@ function DetailQuestion(props: any) {
 
     React.useEffect(() => {
         if (props.qid) {
-            setQuestionId(props.qid);
+            
             setOpenWait(true);
             service.processGetOne(props.qid).then(resp => {
 
@@ -82,7 +82,7 @@ function DetailQuestion(props: any) {
         } else {
 
         }
-    }, [props.qid]);
+    }, [props.qid,service]);
 
 
 
@@ -101,11 +101,11 @@ function DetailQuestion(props: any) {
           let reponsesText = { "A": "", "B": "", "C": "", "D": "", "E": "", "F": "" };
     
           const question: any = resp.data;
-          question.responses.map((value: any, index: any) => {
+          question.responses.forEach((value: any, index: any) => {
             resps = [...resps, value.valide]
           });
     
-          question.responses.map((value: any, index: any) => {
+          question.responses.forEach((value: any, index: any) => {
     
             switch (index) {
               case 0: {
@@ -199,6 +199,7 @@ function DetailQuestion(props: any) {
                                         <Editor
                                             apiKey="fxtxhvf1cdbturnhc05upkvhcqeg6lq96nossno86lpwyl0u"
                                             initialValue={statement}
+                                            inline
                                             disabled={true}
                                             init={{
                                                 menubar: false,
@@ -234,7 +235,7 @@ function DetailQuestion(props: any) {
 
                                                     initialValue={row.content}
                                                     disabled={true}
-
+                                                    inline
                                                     init={{
                                                         height: 150,
                                                         menubar: false,

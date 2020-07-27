@@ -1,6 +1,6 @@
 import axios from "axios";
 import auth from "./../userstuff/Authaurization";
-import {URL_TEST} from "./../config/Urls";
+import {URL_TEST,URL_QUESTION} from "./../config/Urls";
 export default class QuizService {
 
     getTestByPaging = (page: number, size: number) => {
@@ -36,6 +36,15 @@ export default class QuizService {
     getCondidatsTestInfo = (testId:number)  =>{
         return axios.get(URL_TEST+"/condidats/"+testId, { headers: auth.authHeader() });
     }
+
+    createSondageQuestionaire = (testId:number,question:object)  =>{
+        return axios.post(URL_TEST+"/sondage/"+testId, question,{ headers: auth.authHeader() });
+    }
+
+    updateSondageQuestionaire = (qid:any,question:object) =>{
+        return axios.post(URL_QUESTION+"/sondage/"+qid, question,{ headers: auth.authHeader() });
+    }
+
 
 
 }
