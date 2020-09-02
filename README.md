@@ -1,5 +1,9 @@
 ## Demo
-Open [http://localhost:3000] (link to demo)
+Open [Demo link] (http://webview-341576435.us-east-2.elb.amazonaws.com/) 
+
+User id:user1
+password:brayan23
+
 ## Available Scripts
 
 In the project directory, you can run:
