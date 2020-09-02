@@ -1,7 +1,7 @@
 ## Demo
 Open [Demo link] (http://webview-341576435.us-east-2.elb.amazonaws.com/) 
 
-User id:user1
+User id:user1<br/>
 password:brayan23
 
 ## Available Scripts
