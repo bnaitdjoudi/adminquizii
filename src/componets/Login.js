@@ -75,15 +75,7 @@ export default function Login() {
   }
 
 
-  const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenMessage(false);
-    setOpenMessageError(false);
-    setOpenMessageErrorServer(false);
-  };
+  
   function dispalyError (open,messageError){
     if (open) {
       return (

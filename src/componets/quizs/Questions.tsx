@@ -411,7 +411,7 @@ function Questions(props: any) {
   const [orderBy, setOrderBy] = React.useState<keyof Data>('title');
   const [selected, setSelected] = React.useState<string[]>([]);
   const [page, setPage] = React.useState(0);
-  const [dense, setDense] = React.useState(false);
+  const [dense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [rows, setRows] = React.useState<any[]>([]);
   const [selectedQuestion, setSelectQuestion] = React.useState<number>();
@@ -419,13 +419,14 @@ function Questions(props: any) {
   const [refreshCount, setRefreshCount] = React.useState<boolean>(false);
 
   let history = useHistory();
-  const service: CommunService = new CommunService(URL_TEST + "/" + props.test + "/questions");
+  
 
   React.useEffect(() => {
+    let service: CommunService = new CommunService(URL_TEST + "/" + props.test + "/questions");
     service.processGetAll().then((resp: any) => {
       setRows(resp.data);
     })
-  }, [refreshCount,service]);
+  }, [refreshCount,props]);
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -543,7 +544,7 @@ function Questions(props: any) {
       };
 
       props.dispatch(performQuestion(playload));
-      history.push("/tests/" + question.test.id + "/question/" + qid + "/update");
+      history.push("/tests/" + props.test + "/question/" + qid + "/update");
 
     })
   }

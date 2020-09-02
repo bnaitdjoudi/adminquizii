@@ -2,7 +2,6 @@ import * as React from "react";
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
 import {Link, RouteComponentProps} from "react-router-dom";
@@ -50,12 +49,7 @@ interface Props extends RouteComponentProps{
                 </ListItemIcon>
                 <Link to="/tests">{loc('main.questionaire')}</Link>
             </ListItem>
-            <ListItem button className={getClassNameFromRoute("/results")}>
-                <ListItemIcon>
-                    <PeopleIcon />
-                </ListItemIcon>
-                <Link to="/results">{loc('main.results')}</Link>
-            </ListItem>
+           
             <ListItem button className={getClassNameFromRoute("/settings")}>
                 <ListItemIcon>
                     <LayersIcon />

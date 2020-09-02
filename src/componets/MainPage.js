@@ -197,19 +197,12 @@ function MainPage() {
         <Container  className={classes.container}>
         <Switch>
 
-          <Route path="/results">
-            <Results />
-          </Route>
+       
 
-          <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id/createquestion" component={QuestionsForm}/>
           <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id/question/:qid/update" component={QuestionsForm}/>
-           
-          "/tests/"+qid+"/updatequestion"
-           
+          <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id/createquestion" component={QuestionsForm}/>
+          <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/results/:type/:id" component={Results}/>         
           <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests/:id" component={DetailQuiz}/>
-           
-           
-          
           <PrivateRoute profile={["ADMIN_USER"]} pathto="/forbbiden" path="/tests">
            <Quiz/>
           </PrivateRoute>

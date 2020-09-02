@@ -117,33 +117,33 @@ function StepQF2(props: any) {
                     <FormControlLabel
                         control={
                             <Switch color="primary" checked={props.multi} inputProps={{ 'aria-label': 'primary checkbox' }} onChange={(event: any, checked: boolean) => {
-                                props.onMultipRChange(checked);
+                                
                                 props.dispatch(updateMulti());
                             }} />}
                         label={loc("main.multichoise")}
                     /></div></Grid>
                 <Grid item xs={6}><Response index={1} resp="A" onResponseEditChange={(value: string) => {
-                    props.onResponseChange(value, "A");
+                    
                 }}
 
                     title={loc("main.response") + " A"} /></Grid>
                 <Grid item xs={6}><Response index={2} resp="B" onResponseEditChange={(value: string) => {
-                    props.onResponseChange(value, "B");
+                    
                 }}
 
                     title={loc("main.response") + " B"} /></Grid>
                 <Grid item xs={6}><Response index={3} resp="C" onResponseEditChange={(value: string) => {
-                    props.onResponseChange(value, "C");
+                   
                 }}
 
                     title={loc("main.response") + " C"} /></Grid>
                 <Grid item xs={6}><Response index={4} resp="D" onResponseEditChange={(value: string) => {
-                    props.onResponseChange(value, "D");
+                    
                 }}
 
                     title={loc("main.response") + " D"} /></Grid>
                 <Grid item xs={6}><Response index={5} resp="E" onResponseEditChange={(value: string) => {
-                    props.onResponseChange(value, "E");
+                    
                 }}
 
                     title={loc("main.response") + " E"} /></Grid>
@@ -151,7 +151,7 @@ function StepQF2(props: any) {
 
                     resp="F"
                     onResponseEditChange={(value: string) => {
-                        props.onResponseChange(value, "F");
+                        
                     }
                     }
                     title={loc("main.response") + " F"} /></Grid>

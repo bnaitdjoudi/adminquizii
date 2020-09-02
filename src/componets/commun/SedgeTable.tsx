@@ -75,7 +75,7 @@ export default function SedgeTable(props: SedgeTableProp) {
       });
   });
 
-  const [actions, setActions] = React.useState<any>(
+  const [actions] = React.useState<any>(
     [
       {
         icon: "refresh",

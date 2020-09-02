@@ -74,14 +74,15 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function StepQF1(props: any) {
     const classes = useStyles();
-    const service: CommunService = new CommunService(URL_CATEGORY_Q);
+    
     const [options, setOptions] = React.useState<any[]>([]);
     
     React.useEffect(() => {
+        let service: CommunService = new CommunService(URL_CATEGORY_Q);
         service.processGetAll().then((resp) => {
             setOptions(resp.data);
         })
-    }, [service]);
+    }, []);
 
 
 
@@ -89,7 +90,7 @@ function StepQF1(props: any) {
 
     const handleEditorChange = (content: any, editor: any) => {
         //console.log('Content was updated:', content);
-        props.onDescriptionChange(content);
+       
         props.dispatch(updateDescriptionQuestion({ text: content }));
     }
 
@@ -103,7 +104,7 @@ function StepQF1(props: any) {
                             <TextField defaultValue={props.title} id="standard-basic" label={loc("main.titleb")} fullWidth
                                 onChange={(event: any) => {
 
-                                    props.onTitleChange(event.target.value);
+                                    
                                     props.dispatch(updateTitleQuestion({ text: event.target.value }))
                                 }} required />
                             <div style={{ margin: "15px 0px" }}>
@@ -145,7 +146,7 @@ function StepQF1(props: any) {
                                     type="number"
                                     defaultValue={props.time}
                                     onChange={(event: any) => {
-                                        props.onTimeChange(event.target.value);
+                                       
                                         props.dispatch(updateTimeQuestion({ time: event.target.value }));
 
                                     }} required />
@@ -157,7 +158,7 @@ function StepQF1(props: any) {
                                     type="number"
                                     defaultValue={props.score}
                                     onChange={(event: any) => {
-                                        props.onScoreChange(event.target.value);
+                                        
                                         props.dispatch(updateScoreQuestion({ score: event.target.value }));
 
                                     }} />
@@ -169,7 +170,7 @@ function StepQF1(props: any) {
                             <FormControl component="fieldset" >
                                 <FormLabel component="legend" color="primary">{loc("librarie.table.level")}:</FormLabel>
                                 <RadioGroup defaultValue={props.level} row aria-label="gender" name="gender1" onChange={(event: any) => {
-                                    props.onLevelChange(event.target.value);
+                                   
                                     props.dispatch(updateLevelQuestion({ level: event.target.value }));
                                 }}>
                                     <FormControlLabel value="begin" control={<Radio />} label={loc("begin")} />
@@ -183,7 +184,7 @@ function StepQF1(props: any) {
                             <FormControl component="fieldset">
                                 <FormLabel component="legend" color="primary">{loc("librarie.table.lang")}:</FormLabel>
                                 <RadioGroup row defaultValue={props.lang} aria-label="lang" name="lang" onChange={(event: any) => {
-                                    props.onLongChange(event.target.value);
+                                   
                                     props.dispatch(updateLangQuestion({ lang: event.target.value }));
                                 }}>
                                     <FormControlLabel value="gb" control={<Radio />} label={loc("gb")} />
@@ -220,7 +221,7 @@ function StepQF1(props: any) {
                                 )}
 
                                 onChange={(event: object, value: any | any[], reason: string) => {
-                                    props.onCategoriesChange(value);
+                                   
                                     props.dispatch(updateTagsQuestion({ tags: value }));
                                 }}
                             />

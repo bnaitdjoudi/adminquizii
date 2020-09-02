@@ -7,7 +7,6 @@ import LabelPropertie from "../commun/LabelPropertie";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -24,21 +23,18 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { URL_TEST } from "./../../config/Urls";
 import { useHistory } from "react-router-dom";
 import AfterActionSnackBar from "./../commun/AfterActionSnackBar";
-import ScoreQuiz from "./ScoreQuiz";
-import CondidatQuiz from "./CondidatQuiz";
 import Questions from "./Questions";
 import Title from "./../Title";
 import QuizForm from "./QuizForm";
 import loc from "./../../locale/I18n";
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import Link from '@material-ui/core/Link';
-
 import HomeIcon from '@material-ui/icons/Home';
 import LinkIcon from '@material-ui/icons/Link';
 import Typography from '@material-ui/core/Typography';
-import copy from "copy-to-clipboard";  
+import copy from "copy-to-clipboard";
 import SondageQuestionList from "./SondageQuestionList";
-
+import AssessmentIcon from '@material-ui/icons/Assessment';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -80,38 +76,41 @@ const useStyles = makeStyles((theme: Theme) =>
             overflow: 'auto',
             flexDirection: 'column',
         },
+        elSpacing:{
+            marginLeft:2
+        }
     }),
 );
 
 
-function SimpleBreadcrumbs(props:any) {
+function SimpleBreadcrumbs(props: any) {
 
     let history = useHistory();
-  
-    return (
-  
-      <div style={{padding:"12px 0px 0px 0px"}}>
-      <Breadcrumbs aria-label="breadcrumb">
-        
-        <Link color="primary"  onClick={()=>{
-         history.push("/");
-        
-        }} >
-          <HomeIcon/>
-        </Link>
 
-        <Link color="primary"  onClick={()=>{
-         history.push("/tests");
-        
-        }} >
-          {loc("main.questionaire")}
-        </Link>
-       
-      <Typography color="textPrimary">{props.title?props.title:""}</Typography>
-      </Breadcrumbs>
-      </div>
+    return (
+
+        <div style={{ padding: "12px 0px 0px 0px" }}>
+            <Breadcrumbs aria-label="breadcrumb">
+
+                <Link color="primary" onClick={() => {
+                    history.push("/");
+
+                }} >
+                    <HomeIcon />
+                </Link>
+
+                <Link color="primary" onClick={() => {
+                    history.push("/tests");
+
+                }} >
+                    {loc("main.questionaire")}
+                </Link>
+
+                <Typography color="textPrimary">{props.title ? props.title : ""}</Typography>
+            </Breadcrumbs>
+        </div>
     );
-  }
+}
 
 
 export default function DetailQuiz(props: any) {
@@ -122,7 +121,7 @@ export default function DetailQuiz(props: any) {
     const [open, setOpen] = React.useState(true);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [openAction, setOpenAtion] = React.useState(false);
-    
+
     const [pathTitle, setPathTitle] = React.useState<string>("");
     //const [compagn, setCompagn] = React.useState<any>();
     const [test, setTest] = React.useState<any>({});
@@ -140,8 +139,8 @@ export default function DetailQuiz(props: any) {
         service.processGetOne(props.match.params.id).then((resp) => {
             setTest(resp.data);
             setOpen(false);
-            
-            setPathTitle("["+(resp.data&&resp.data.reference?resp.data.reference:"")+"] "+resp.data.title);
+
+            setPathTitle("[" + (resp.data && resp.data.reference ? resp.data.reference : "") + "] " + resp.data.title);
 
         })
     }, [props]);
@@ -203,53 +202,68 @@ export default function DetailQuiz(props: any) {
         setOpenAtion(false);
     }
 
-    const copyLinkTest = (event:any) =>{
-          let quizService : QuizService = new QuizService();
-          setOpen(true);
-          quizService.linkTest(props.match.params.id).then(resp =>{
+    const copyLinkTest = (event: any) => {
+        let quizService: QuizService = new QuizService();
+        setOpen(true);
+        quizService.linkTest(props.match.params.id).then(resp => {
             copy(resp.data);
-          }).finally(()=>{
-              setOpen(false);
-          })
+        }).finally(() => {
+            setOpen(false);
+        })
+    }
+
+    const goToResult = (event:any) =>{
+        history.push("/results/"+test.type+"/"+props.match.params.id);
     }
 
     return (<div>
-        <MenuBar content={<SimpleBreadcrumbs title={pathTitle}/>} />
+        <MenuBar content={<SimpleBreadcrumbs title={pathTitle} />} />
         <Paper  >
             <Grid container spacing={1} xs="auto">
-                <Grid item xs={12} md={8} lg={3}>
-                    <Paper className={classes.root2}>
 
-                        <Grid >
-                            <ScoreQuiz />
-                        </Grid>
-                    </Paper>
-                </Grid>
-                <Grid item xs={12} md={6} lg={3}>
-                    <Paper className={classes.root2}>
-
-                        <Grid >
-
-                            <CondidatQuiz  testId={props.match.params.id} />
-
-                        </Grid>
-                    </Paper>
-                </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12}>
                     <Card className={classes.root}>
 
                         <CardHeader
 
                             action={<div>
-                                <IconButton aria-label="settings" onClick={onDeleteClicked} title={loc("delete")} >
+                                <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    aria-label="settings"
+                                    onClick={onDeleteClicked}
+                                    title={loc("delete")} 
+                                    className={classes.elSpacing}>
                                     <DeleteIcon />
-                                </IconButton>
-                                <IconButton aria-label="settings" onClick={onUpdateClicked} title={loc("main.updatetest")}>
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    aria-label="settings"
+                                    onClick={onUpdateClicked}
+                                    title={loc("main.updatetest")}
+                                    className={classes.elSpacing}>
                                     <EditIcon />
-                                </IconButton>
-                                <IconButton aria-label="settings" onClick={copyLinkTest} title={loc("main.lientest")}>
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    aria-label="settings"
+                                    onClick={copyLinkTest}
+                                    title={loc("main.lientest")}
+                                    className={classes.elSpacing}>
                                     <LinkIcon />
-                                </IconButton>
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    aria-label="settings"
+                                    onClick={goToResult}
+                                    className={classes.elSpacing}
+                                    title={loc("main.lientest")}
+                                    >
+                                    <AssessmentIcon />
+                                </Button>
                             </div>
                             }
                             title={<Title>{loc("main.general")}</Title>}
@@ -261,21 +275,21 @@ export default function DetailQuiz(props: any) {
                             <Grid xs={4} >
                                 <CardContent>
                                     <LabelPropertie label={loc("main.title")} value={test ? test.title : ""} />
-                                    <LabelPropertie label={loc("main.doc")} value={test ? ""+test.createDate : ""} />
-                                    <LabelPropertie label={loc("main.compagn")} value={test&&test.compagn ? test.compagn.title : ""} />
+                                    <LabelPropertie label={loc("main.doc")} value={test ? "" + test.createDate : ""} />
+                                    <LabelPropertie label={loc("main.compagn")} value={test && test.compagn ? test.compagn.title : ""} />
                                 </CardContent>
                             </Grid>
                             <Grid xs={4} >
                                 <CardContent>
                                     <LabelPropertie label={loc("main.reference")} value={test ? test.reference + "" : ""} />
-                                    <LabelPropertie label={loc("main.refcompagn")} value={test&&test.compagn ? test.compagn?.compagnRef : ""} />
+                                    <LabelPropertie label={loc("main.refcompagn")} value={test && test.compagn ? test.compagn?.compagnRef : ""} />
                                 </CardContent>
                             </Grid>
 
                             <Grid xs={4} >
                                 <CardContent>
-                                    <LabelPropertie label={loc("main.type")} value={test ? test.type==="s"? "Sondage":"Evaluation"  : ""} />
-                                    {test && test.type==="v"? <LabelPropertie label={minscoreLabel} value={test ? ""+test.minScore : ""} />:""}
+                                    <LabelPropertie label={loc("main.type")} value={test ? test.type === "s" ? "Sondage" : "Evaluation" : ""} />
+                                    {test && test.type === "v" ? <LabelPropertie label={minscoreLabel} value={test ? "" + test.minScore : ""} /> : ""}
                                 </CardContent>
                             </Grid>
 
@@ -286,11 +300,11 @@ export default function DetailQuiz(props: any) {
                 </Grid>
                 <Grid item xs={12}>
                     <Paper className={classes.paper}>
-                        {test?test.type==="s"?
-                         <SondageQuestionList test={props.match.params.id} />
-                        :<Questions test={props.match.params.id}  />
-                        :<Questions test={props.match.params.id}  />}
-                        
+                        {test && test.type === "s" ?
+                            <SondageQuestionList test={props.match.params.id} />
+                            : <Questions test={props.match.params.id} />
+                            }
+
                     </Paper>
                 </Grid>
 

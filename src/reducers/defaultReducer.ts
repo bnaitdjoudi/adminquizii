@@ -10,7 +10,7 @@ const initialState = {
   time: 0,
   score: 0,
   level: "interm",
-  lang: "en",
+  lang: "fr",
   tags: []
 };
 

@@ -38,7 +38,7 @@ function DetailQuestion(props: any) {
     let history = useHistory();
     const classes = useStyles();
     const resps: any[] = ["A", "B", "C", "D", "E", "F"];
-    const service = new CommunService(URL_QUESTION);
+    
     
     const [open, setOpen] = React.useState<boolean>(false);
     const [openWait, setOpenWait] = React.useState<boolean>(false);
@@ -55,7 +55,7 @@ function DetailQuestion(props: any) {
 
     React.useEffect(() => {
         if (props.qid) {
-            
+            let service = new CommunService(URL_QUESTION);
             setOpenWait(true);
             service.processGetOne(props.qid).then(resp => {
 
@@ -82,7 +82,7 @@ function DetailQuestion(props: any) {
         } else {
 
         }
-    }, [props.qid,service]);
+    }, [props.qid]);
 
 
 

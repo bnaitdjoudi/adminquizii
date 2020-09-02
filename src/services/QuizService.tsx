@@ -4,19 +4,19 @@ import {URL_TEST,URL_QUESTION} from "./../config/Urls";
 export default class QuizService {
 
     getTestByPaging = (page: number, size: number) => {
-        return axios.post("http://localhost:8081/tests/search", { pageNumber: page, size: size, sorts:{"id":"DESC"} });
+        return axios.post(URL_TEST+"/tests/search", { pageNumber: page, size: size, sorts:{"id":"DESC"} });
     }
 
     update = (id: number, values: any) => {
-        return axios.put("http://localhost:8081/tests/" + id, values);
+        return axios.put(URL_TEST+"/tests/" + id, values);
     }
 
     delete = (id: number) => {
-        return axios.delete("http://localhost:8081/tests/" + id,{ headers: auth.authHeader() });
+        return axios.delete(URL_TEST+"/tests/" + id,{ headers: auth.authHeader() });
     }
 
     createquize = (test: any) => {
-        return axios.post("http://localhost:8081/tests/", test,{ headers: auth.authHeader() }
+        return axios.post(URL_TEST+"/tests/", test,{ headers: auth.authHeader() }
         )
     }
 
@@ -45,6 +45,17 @@ export default class QuizService {
         return axios.post(URL_QUESTION+"/sondage/"+qid, question,{ headers: auth.authHeader() });
     }
 
+    getTestSondageResultByTestId = (testId:any) => {
+        return axios.get(URL_TEST+"/sondage/result/"+testId, { headers: auth.authHeader() });
+    }
 
+    getTestType = (testId:any) => {
+        return axios.get(URL_TEST+"/type/"+testId, { headers: auth.authHeader() });
+    }
+
+
+    listTestEvalResult = (query:object) =>{
+        return axios.post(URL_TEST+"/evaltestresult", query,{ headers: auth.authHeader() });
+    }
 
 }
