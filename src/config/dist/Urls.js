@@ -1,0 +1,13 @@
+"use strict";
+exports.__esModule = true;
+exports.URL_QUESTION_ADD_B = exports.URL_QUESTION = exports.URL_CATEGORY_Q = exports.URL_LOGOUT = exports.URL_LOGIN = exports.URL_COMPAGN_COMBO = exports.URL_COMPAGN = exports.URL_TEST = exports.URL_BASE = exports.HOST = void 0;
+exports.HOST = "lb-server1-707448625.us-east-2.elb.amazonaws.com";
+exports.URL_BASE = "http://" + exports.HOST + ":80/";
+exports.URL_TEST = exports.URL_BASE + "tests";
+exports.URL_COMPAGN = exports.URL_BASE + "compagn";
+exports.URL_COMPAGN_COMBO = exports.URL_COMPAGN + "/combo";
+exports.URL_LOGIN = exports.URL_BASE + "user/login";
+exports.URL_LOGOUT = exports.URL_BASE + "user/logout";
+exports.URL_CATEGORY_Q = exports.URL_BASE + "categorieq";
+exports.URL_QUESTION = exports.URL_BASE + "questions";
+exports.URL_QUESTION_ADD_B = exports.URL_QUESTION + "/createform";
