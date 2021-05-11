@@ -30,7 +30,7 @@
     "i18next": "^19.4.4",
     "i18next-browser-languagedetector": "^4.1.1",
     "i18next-http-backend": "^1.0.11",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "material-table": "^1.57.2",
     "react": "^16.13.1",
     "react-charts": "^2.0.0-beta.7",
